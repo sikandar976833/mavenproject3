@@ -35,6 +35,21 @@
                     <compilerArguments>
                         <endorseddirs>${endorsed.dir}</endorseddirs>
                     </compilerArguments>
+
+
+         
+        <container>
+            <containerId>tomcat9x</containerId>
+            <type>remote</type>
+        </container>
+        <configuration>
+            <type>runtime</type>
+            <properties>
+                <cargo.remote.username>admin</cargo.remote.username>
+                <cargo.remote.password>admin_password</cargo.remote.password>
+            </properties>
+        </configuration>
+
                 </configuration>
             </plugin>
             <plugin>
