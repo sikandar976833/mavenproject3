@@ -12,12 +12,11 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
-    <cargo.remote.username>admin</cargo.remote.username>
-    <cargo.remote.password>system123#</cargo.remote.password>
-</properties>
+        <cargo.remote.username>admin</cargo.remote.username>
+        <cargo.remote.password>system123#</cargo.remote.password>
+        <cargo.remote.uri>http://localhost:1000/manager/html</cargo.remote.uri>
+    </properties>
 
-    
     <dependencies>
         <dependency>
             <groupId>javax</groupId>
@@ -34,8 +33,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source> <!-- Updated to Java 8 -->
+                    <target>1.8</target> <!-- Updated to Java 8 -->
                     <compilerArguments>
                         <endorseddirs>${endorsed.dir}</endorseddirs>
                     </compilerArguments>
@@ -74,7 +73,36 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Cargo Maven Plugin for Tomcat Deployment -->
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.10.0</version> <!-- Use the latest version -->
+                <configuration>
+                    <container>
+                        <containerId>tomcat9x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                        <properties>
+                            <cargo.remote.uri>${cargo.remote.uri}</cargo.remote.uri>
+                            <cargo.remote.username>${cargo.remote.username}</cargo.remote.username>
+                            <cargo.remote.password>${cargo.remote.password}</cargo.remote.password>
+                        </properties>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>mavenproject3</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
 </project>
